@@ -1,0 +1,27 @@
+<h2>✏️ Modifier le produit</h2>
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <mat-label>Titre</mat-label>
+    <input matInput formControlName="title">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Prix</mat-label>
+    <input matInput type="number" formControlName="price">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Image</mat-label>
+    <input matInput formControlName="images">
+  </mat-form-field>
+
+  <div class="form-actions">
+    <button mat-raised-button color="primary" type="submit">✔️ Enregistrer</button>
+    <button mat-button color="warn" type="button" (click)="dialogRef.close()">❌ Annuler</button>
+  </div>
+</form>

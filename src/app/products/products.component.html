@@ -1,0 +1,33 @@
+<div class="search-container">
+  <mat-form-field class="search-bar">
+    <mat-label>Rechercher un produit</mat-label>
+    <input matInput [formControl]="searchControl" placeholder="Tapez un nom...">
+  </mat-form-field>
+
+  <button *ngIf="isAdmin" mat-raised-button color="primary" class="add-product-btn" (click)="openAddProductDialog()">
+    ➕ Ajouter un produit
+  </button>
+</div>
+
+<!-- Liste des produits -->
+<div class="products-container">
+  <mat-card *ngFor="let product of displayedProducts" class="product-card">
+    <img class="mon-image" mat-card-image [src]="product.images.length > 0 ? product.images[0] : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'" 
+         alt="{{ product.title }}"> 
+    <mat-card-content>
+      <h2>{{ product.title }}</h2>
+      <h3>{{ product.price | currency:'USD' }}</h3>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [routerLink]="['/products', product.id]">Voir</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<!-- Pagination -->
+<mat-paginator
+  [pageSize]="pageSize"
+  [length]="filteredProducts.length"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onPageChange($event)">
+</mat-paginator>

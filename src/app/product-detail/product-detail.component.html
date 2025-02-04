@@ -1,0 +1,45 @@
+<mat-card class="product-detail-container" *ngIf="product$ | async as product">
+  <!-- Loader de chargement -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+  
+  <!-- Images sous forme d'accordéons -->
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let image of product.images">
+      <mat-expansion-panel-header>
+        <span>Image</span>
+      </mat-expansion-panel-header>
+      <img class="product-image" [src]="image" alt="Image produit">
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <!-- Grid pour titre & prix -->
+  <mat-grid-list cols="2" rowHeight="50px" class="product-info-grid">
+    <mat-grid-tile>
+      <h2>{{ product.title }}</h2>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <h3 class="price">{{ product.price | currency:'USD' }}</h3>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <!-- Description -->
+  <mat-card-content>
+    <p>{{ product.description }}</p>
+  </mat-card-content>
+
+  <!-- Affichage des boutons en fonction du rôle -->
+  <mat-card-actions>
+    <!-- Boutons pour Admin -->
+    <div *ngIf="isAdmin">
+      <button mat-raised-button color="accent" (click)="openEditDialog(product)">✏️ Modifier</button>
+      <button mat-raised-button color="warn" (click)="deleteProduct(product)">🗑️ Supprimer</button>
+    </div>
+
+    <!-- Bouton pour Customer -->
+    <button *ngIf="!isAdmin" mat-raised-button color="primary" (click)="addToCart(product)">
+      🛒 Mettre dans le panier
+    </button>
+  </mat-card-actions>
+</mat-card>

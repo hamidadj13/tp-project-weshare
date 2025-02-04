@@ -1,0 +1,23 @@
+.container {
+    height: 100vh;
+  }
+  
+  .sidebar {
+    width: 220px;
+  }
+  
+  .content {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  mat-card {
+    max-width: 500px;
+    margin: 20px auto;
+  }
+  .mon-side{
+    display: flex;
+    flex-direction: column;
+    align-items: center ;
+    justify-content: left;
+  }

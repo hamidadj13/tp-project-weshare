@@ -1,0 +1,27 @@
+/* Appliquer le style sur toute la page */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Conteneur principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Prend toute la hauteur de l'écran */
+}
+
+/* Contenu principal */
+.content {
+    flex: 1; /* Remplit l'espace disponible pour pousser le footer en bas */
+    padding: 20px;
+}
+
+/* Footer */
+app-footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
