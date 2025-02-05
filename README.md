@@ -105,6 +105,7 @@ L’application sera accessible sur `http://localhost:4200` si le port n'est pas
 
 ### Voici la structure du projet
 
+```
 /src
 |
 |--- index.html
@@ -191,7 +192,10 @@ L’application sera accessible sur `http://localhost:4200` si le port n'est pas
             users.component.html
             users.component.spec.ts
             users.component.ts
+
+```            
 ---
+
 
 ## 🤝 Contribution
 
