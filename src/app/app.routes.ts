@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { authGuard } from './guards/auth.guard';
 import { ProductsComponent } from './products/products.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,8 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: 'login', component: LoginComponent },
+
+      { path: 'sign-up', component: SignUpComponent },
 
       { path: 'products', component: ProductsComponent },
 

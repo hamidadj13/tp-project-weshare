@@ -1,27 +1,54 @@
-<h2>✏️ Modifier le produit</h2>
+<h2>✏️ Modifier le Produit</h2>
+
 <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline">
-    <mat-label>Titre</mat-label>
-    <input matInput formControlName="title">
-  </mat-form-field>
+ <!-- Titre -->
+ <mat-form-field appearance="outline">
+  <mat-label>Titre</mat-label>
+  <input matInput formControlName="title" required>
+ </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Prix</mat-label>
-    <input matInput type="number" formControlName="price">
-  </mat-form-field>
+ <!-- Prix -->
+ <mat-form-field appearance="outline">
+  <mat-label>Prix</mat-label>
+  <input matInput type="number" formControlName="price" required>
+ </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Description</mat-label>
-    <textarea matInput formControlName="description"></textarea>
-  </mat-form-field>
+ <!-- Description -->
+ <mat-form-field appearance="outline">
+  <mat-label>Description</mat-label>
+  <textarea matInput formControlName="description" required></textarea>
+ </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Image</mat-label>
-    <input matInput formControlName="images">
-  </mat-form-field>
+ <!-- Sélecteur de Catégorie -->
+ <!-- Sélecteur de Catégorie -->
+<mat-form-field appearance="outline">
+  <mat-label>Catégorie</mat-label>
+  <mat-select formControlName="categoryId" required>
+    <mat-option *ngFor="let category of categories" [value]="category.id">
+      {{ category.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
-  <div class="form-actions">
-    <button mat-raised-button color="primary" type="submit">✔️ Enregistrer</button>
-    <button mat-button color="warn" type="button" (click)="dialogRef.close()">❌ Annuler</button>
-  </div>
+ <!-- Section Images -->
+ <h3>📸 Images du Produit</h3>
+ <div *ngFor="let imgCtrl of images.controls; let i = index" class="image-input">
+    <mat-form-field appearance="outline">
+        <mat-label>Image {{ i + 1 }}</mat-label>
+        <input matInput [formControl]="imgCtrl" required>
+    </mat-form-field>
+    
+    <!-- Icône de suppression -->
+    <button mat-icon-button (click)="removeImage(i)" type="button">
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>
+
+ <button mat-button color="primary" (click)="addImage()" type="button">➕ Ajouter une image</button>
+
+ <!-- Actions -->
+ <div class="form-actions">
+  <button mat-raised-button color="primary" type="submit">✔️ Enregistrer</button>
+  <button class="cancel-btn" (click)="dialogRef.close()">❌ Annuler</button>
+</div>
 </form>

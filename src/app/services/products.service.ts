@@ -31,6 +31,7 @@ export class ProductsService {
   }
 
   addProduct(productData: any): Observable<any> {
+    console.log("on est dans service et le body est : ", productData)
     return this.http.post(`${this.apiUrl}`, productData);
   }
   

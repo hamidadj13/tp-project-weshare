@@ -138,6 +138,14 @@ button[color="warn"]:hover {
   z-index: 10;
 }
 
+.desc {
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+  white-space: normal;
+  max-width: 100%; 
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
   .product-detail-container {

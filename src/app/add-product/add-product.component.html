@@ -1,32 +1,52 @@
-<h2>🛍️ Ajouter un Produit</h2>
-<form (ngSubmit)="submitProduct()" class="product-form">
+<h2>➕ Ajouter un Produit</h2>
+
+<form (ngSubmit)="submitProduct()">
+  <!-- Titre -->
   <mat-form-field appearance="outline">
     <mat-label>Titre</mat-label>
     <input matInput [(ngModel)]="product.title" name="title" required>
   </mat-form-field>
 
+  <!-- Prix -->
   <mat-form-field appearance="outline">
     <mat-label>Prix</mat-label>
     <input matInput type="number" [(ngModel)]="product.price" name="price" required>
   </mat-form-field>
 
+  <!-- Description -->
   <mat-form-field appearance="outline">
     <mat-label>Description</mat-label>
-    <textarea matInput [(ngModel)]="product.description" name="description"></textarea>
+    <textarea matInput [(ngModel)]="product.description" name="description" required></textarea>
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>URL de l'image</mat-label>
-    <input matInput [(ngModel)]="product.images[0]" name="images">
-  </mat-form-field>
-
+  <!-- Sélecteur de Catégorie -->
   <mat-form-field appearance="outline">
     <mat-label>Catégorie</mat-label>
-    <input matInput type="number" [(ngModel)]="product.categoryId" name="categoryId" required>
+    <mat-select [(ngModel)]="product.categoryId" name="categoryId" required>
+      <mat-option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
+  <h3>📸 Images du Produit</h3>
+  
+  <!-- Affichage dynamique des champs d'images -->
+  <div *ngFor="let img of product.images; let i = index" class="image-input">
+    <mat-form-field appearance="outline">
+      <mat-label>Image {{ i + 1 }}</mat-label>
+      <input matInput [(ngModel)]="product.images[i]" name="image{{ i }}" required>
+    </mat-form-field>
+    <!-- Suppression d'image -->
+    <button mat-icon-button color="warn" (click)="removeImage(i)" type="button">🗑️</button>
+  </div>
+
+  <!-- Ajouter une nouvelle image -->
+  <button mat-button color="primary" (click)="addImage()" type="button">➕ Ajouter une image</button>
+
+  <!-- Boutons de soumission et annulation -->
   <div class="form-actions">
-    <button mat-raised-button color="primary" type="submit">✔️ Ajouter</button>
-    <button mat-button color="warn" type="button" (click)="dialogRef.close()">❌ Annuler</button>
+    <button mat-raised-button color="primary" type="submit">✔️ Enregistrer</button>
+    <button mat-button color="warn" (click)="dialogRef.close()">❌ Annuler</button>
   </div>
 </form>

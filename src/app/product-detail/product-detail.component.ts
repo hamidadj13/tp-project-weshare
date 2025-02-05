@@ -8,11 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Observable } from 'rxjs';
-import { EditProductComponent } from '../edit-product/edit-product.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Observable, of } from 'rxjs';
+import { EditProductComponent } from '../edit-product/edit-product.component';
 
 interface Product {
   id: number;
@@ -26,14 +25,15 @@ interface Product {
   selector: 'app-product-detail',
   standalone: true,
   imports: [
-    CommonModule, 
-    MatCardModule, 
-    MatButtonModule, 
-    MatExpansionModule, 
-    MatGridListModule, 
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatExpansionModule,
+    MatGridListModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule],
+    MatProgressSpinnerModule
+  ],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
@@ -51,17 +51,48 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     const productId = Number(this.route.snapshot.paramMap.get('id'));
-    this.product$ = this.productsService.getProductById(productId);
+    this.productsService.getProductById(productId).subscribe(product => {
+      console.log('Produit récupéré:', product);
 
-    // Vérifier si l'utilisateur est admin
+      // Vérifie si `images` est une string JSON et convertit en tableau si nécessaire
+      if (typeof product.images === 'string') {
+        try {
+          product.images = JSON.parse(product.images); // Tente de parser la chaîne JSON
+        } catch (error) {
+          console.error('Erreur de parsing des images:', error);
+          product.images = []; // Évite une erreur si parsing échoue
+        }
+      }
+
+      // Si `images` est null ou autre, s'assurer que c'est un tableau vide
+      if (!Array.isArray(product.images)) {
+        product.images = [];
+      }
+
+      // Reformatage des images pour s'assurer qu'elles sont au bon format
+      product.images = this.reformatImages(product.images);
+
+      this.product$ = of(product); // Met à jour correctement l'Observable
+    });
+
     this.authService.isAdmin$.subscribe(isAdmin => {
       this.isAdmin = isAdmin;
-      
     });
   }
 
-  addToCart(product: Product) {
-    console.log('🛒 Produit ajouté au panier:', product);
+  /**
+   * ✅ Nettoie les images reçues et les reformate si nécessaire
+   */
+  reformatImages(images: string[]): string[] {
+    return images.map(image => {
+      // Si l'image est une chaîne encodée sous forme de tableau (ex : "[\"https://...\"]")
+      if (image.startsWith('["') || image.endsWith('"]')) {
+        // Enlever les guillemets inutiles et les crochets
+        return image.replace(/[\[\]"]/g, '').trim();
+      }
+      // Si l'image est déjà dans le bon format, la retourner telle quelle
+      return image.trim();
+    });
   }
 
   openEditDialog(product: Product) {
@@ -70,14 +101,13 @@ export class ProductDetailComponent implements OnInit {
       data: { product }
     });
 
-    // Met à jour la page après modification
     dialogRef.afterClosed().subscribe(updatedProduct => {
       if (updatedProduct) {
-        this.isLoading = true; // ✅ Afficher le spinner
+        this.isLoading = true;
         this.productsService.getProductById(updatedProduct.id).subscribe({
           next: product => {
-            this.product$ = new Observable(observer => observer.next(product));
-            this.isLoading = false; // ✅ Cacher le spinner après chargement
+            this.product$ = of(product);
+            this.isLoading = false;
             this.snackBar.open('✅ Produit mis à jour avec succès', 'Fermer', { duration: 3000 });
           },
           error: err => {
@@ -91,12 +121,12 @@ export class ProductDetailComponent implements OnInit {
 
   deleteProduct(product: Product) {
     if (confirm('⚠️ Voulez-vous vraiment supprimer ce produit ?')) {
-      this.isLoading = true; // ✅ Afficher le spinner pendant la suppression
+      this.isLoading = true;
       this.productsService.deleteProduct(product.id).subscribe({
         next: () => {
           this.snackBar.open('🗑️ Produit supprimé avec succès', 'Fermer', { duration: 3000 });
           this.isLoading = false;
-          this.router.navigate(['/products']); // Redirection après suppression
+          this.router.navigate(['/products']);
         },
         error: err => {
           console.error(err);

@@ -5,6 +5,7 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list class="mon-side">
       <a mat-button *ngIf="!(isLoggedIn$ | async)" routerLink="/login">Login</a>
+      <a mat-button *ngIf="!(isLoggedIn$ | async)" routerLink="/sign-up">SignUp</a>
       <a mat-button  routerLink="/products">Products</a>
       <a mat-button *ngIf="isAdmin" routerLink="/users">Users</a>
       <button mat-button *ngIf="isLoggedIn$ | async" (click)="logout()">Logout</button>
@@ -19,6 +20,7 @@
         <mat-card-content>
           <p>Une plateforme de vente intéressante et sécurisée.</p>
           <a mat-button *ngIf="!(isLoggedIn$ | async)" routerLink="/login">Login</a>
+          <a mat-button *ngIf="!(isLoggedIn$ | async)" routerLink="/sign-up">SignUp</a>
         </mat-card-content>
       </mat-card>
             

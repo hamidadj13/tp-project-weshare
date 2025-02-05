@@ -1,0 +1,162 @@
+/* Conteneur principal */
+form {
+    max-height: 75vh;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 30px 0;
+}
+
+/* Style pour le titre */
+h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style pour les champs de formulaire */
+mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+mat-form-field .mat-form-field-label {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Section des images */
+h3 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* ✅ Conteneur des champs d'images */
+.image-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: nowrap;
+}
+
+.image-input mat-form-field {
+    flex-grow: 1;
+    min-width: 200px;
+}
+
+/* ✅ Bouton de suppression d'image à côté de chaque champ */
+.image-input button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.image-input button:hover {
+    background-color: rgba(211, 47, 47, 0.1);
+}
+
+/* ✅ Icône de suppression */
+.image-input button mat-icon {
+    color: #d32f2f;
+    font-size: 24px;
+}
+
+.image-input button:hover mat-icon {
+    color: #c62828;
+}
+
+/* Boutons d'action */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* ✅ Bouton Enregistrer */
+button.mat-raised-button {
+    background-color: #3f51b5;
+    color: white;
+    font-size: 16px;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-transform: none;
+    transition: background-color 0.3s;
+}
+
+button.mat-raised-button:hover {
+    background-color: #303f9f;
+}
+
+/* ✅ Bouton Annuler amélioré */
+button.cancel-btn {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-transform: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button.cancel-btn:hover {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    button.mat-raised-button, button.cancel-btn {
+        font-size: 14px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .image-input {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    button[color="warn"] {
+        width: 35px;
+        height: 35px;
+    }
+}

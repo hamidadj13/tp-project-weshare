@@ -22,6 +22,7 @@ interface UserResponse {
 export class AuthService {
   private readonly apiUrl = 'https://api.escuelajs.co/api/v1/auth/login';
   private readonly profilApiUrl = 'https://api.escuelajs.co/api/v1/auth/profile';
+  private readonly signInApiUrl = 'https://api.escuelajs.co/api/v1/users';
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   private isAdminSubject = new BehaviorSubject<boolean>(this.hasAdminRole());
@@ -77,10 +78,9 @@ export class AuthService {
   }
 
   // Inscription utilisateur
-  register(userData: { username: string; email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData);
+  signUp(userData: { name: string; email: string; password: string; avatar: string; role: string }): Observable<any> {
+    return this.http.post(this.signInApiUrl, userData);
   }
-  
 
   isAuthenticated(): Observable<boolean> {
     return this.isAuthenticatedSubject.asObservable();

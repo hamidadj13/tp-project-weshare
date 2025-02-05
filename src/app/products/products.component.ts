@@ -21,8 +21,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class ProductsComponent implements OnInit {
 
-  
-  isAdmin = false; 
+  isAdmin = false;
   products: any[] = [];
   filteredProducts: any[] = [];
   displayedProducts: any[] = [];
@@ -32,29 +31,34 @@ export class ProductsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private productsService : ProductsService, private dialog: MatDialog, private authService: AuthService) {}
+  constructor(private productsService: ProductsService, private dialog: MatDialog, private authService: AuthService) {}
 
   openAddProductDialog() {
-  this.dialog.open(AddProductComponent, {
-    width: '400px',
-  });
+    this.dialog.open(AddProductComponent, {
+      width: '400px',
+    });
   }
-
 
   ngOnInit(): void {
     this.productsService.getAllProducts().subscribe({
       next: (data) => {
-        this.products = data;
-        this.filteredProducts = data; // Initialisation du filtre
+        // Nettoyer et reformater les images avant de stocker les produits
+        this.products = data.map(product => ({
+          ...product,
+          images: this.reformatImages(product.images)
+        }));
+
+        this.filteredProducts = this.products; // Initialisation du filtre
         this.updateDisplayedProducts(0, this.pageSize);
+        console.log(this.products)
       },
       error: (error) => console.error(error)
     });
 
     this.authService.restoreAdminStatus(); // Restaurer le rôle après un refresh
-      this.authService.isAdmin$.subscribe(isAdmin => {
-        this.isAdmin = isAdmin;
-        console.log("isAdmin dans ProductsComponent:", this.isAdmin); // Debug
+    this.authService.isAdmin$.subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
+      console.log("isAdmin dans ProductsComponent:", this.isAdmin); // Debug
     });
 
     // Écoute les changements dans l'input et filtre les produits
@@ -73,9 +77,25 @@ export class ProductsComponent implements OnInit {
   }
 
   private filterProducts(searchText: string) {
-    this.filteredProducts = this.products.filter(product => 
+    this.filteredProducts = this.products.filter(product =>
       product.title.toLowerCase().includes(searchText.toLowerCase())
     );
     this.updateDisplayedProducts(0, this.pageSize);
   }
+
+  /**
+   * ✅ Reformater les images pour s'assurer qu'elles sont au bon format
+   */
+  private reformatImages(images: string[]): string[] {
+    return images.map(image => {
+      // Si l'image est une chaîne encodée sous forme de tableau (ex : "[\"https://...\"]")
+      if (image.startsWith('["') || image.endsWith('"]')) {
+        // Enlever les guillemets inutiles et les crochets
+        return image.replace(/[\[\]"]/g, '').trim();
+      }
+      // Si l'image est déjà dans le bon format, la retourner telle quelle
+      return image.trim();
+    });
+  }
+  
 }

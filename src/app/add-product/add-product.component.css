@@ -1,15 +1,147 @@
-.product-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-    max-width: 400px;
-    margin: auto;
+/* Style général pour le formulaire */
+form {
+  max-height: 75vh; /* Réduit la hauteur du formulaire pour le remonter */
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Espacement entre les éléments */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour donner de la profondeur */
+  margin-bottom: 30px; /* Un peu plus d'espace en bas du formulaire */
+  margin-top: 30px; /* Ajouter de l'espace en haut pour ne pas être trop près du haut de l'écran */
+}
+
+/* Style pour le titre */
+h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Style pour les mat-form-field (champs de formulaire) */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: #f9f9f9; /* Fond clair pour les champs */
+  border-radius: 8px;
+}
+
+mat-form-field .mat-form-field-label {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Style pour les inputs */
+mat-input-element {
+  font-size: 16px;
+}
+
+/* Section des images du produit */
+h3 {
+  font-size: 20px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.image-input {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: wrap; /* Permet aux éléments de s'adapter à l'écran */
+}
+
+.image-input mat-form-field {
+  flex-grow: 1;
+  min-width: 200px; /* Limite la largeur des champs pour qu'ils ne s'étendent pas trop */
+}
+
+/* Style pour le bouton de suppression d'image */
+
+button[color="warn"]:hover {
+  background-color: #c62828;
+}
+
+/* Style pour les boutons d'action */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px; /* Augmenter l'espacement entre les boutons */
+  margin-top: 30px; /* Espace important entre le contenu du formulaire et les boutons */
+}
+
+button {
+  font-size: 16px;
+  padding: 12px 25px; /* Plus de padding pour rendre les boutons plus grands */
+  border-radius: 8px;
+  text-transform: none;
+}
+
+button.mat-raised-button {
+  background-color: #3f51b5;
+  color: white;
+}
+
+button.mat-raised-button:hover {
+  background-color: #303f9f;
+}
+
+button.mat-button {
+  background-color: #d32f2f; /* Garder la couleur rouge */
+  color: white;
+}
+
+button.mat-button:hover {
+  background-color: #c62828; /* Couleur rouge plus foncée au survol */
+}
+
+/* Responsivité pour les petits écrans */
+@media (max-width: 768px) {
+  /* Sur petits écrans, on fait en sorte que tout s'adapte */
+  form {
+    padding: 15px;
   }
-  
+
+  h2 {
+    font-size: 20px;
+  }
+
+  mat-form-field {
+    margin-bottom: 15px;
+  }
+
   .form-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+    flex-direction: column;
+    gap: 10px;
   }
-  
+
+  button {
+    width: 100%;
+  }
+
+  /* Adapter les boutons */
+  button.mat-raised-button, button.mat-button {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  form {
+    max-width: 100%;
+  }
+
+  .image-input {
+    flex-direction: column; /* Sur les très petits écrans, les images sont empilées */
+  }
+
+  button[color="warn"] {
+    width: 35px;
+    height: 35px;
+  }
+}
