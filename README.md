@@ -1,59 +1,212 @@
-# AngularTestProject
+# 🛒 SyncVote - Gestion des Produits
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.3.
+## 📌 Description du Projet
 
-## Development server
+SyncVote est une application web développée en **Angular** permettant la gestion des produits avec des fonctionnalités avancées telles que l'**inscription**, la **connexion**, l'**ajout**, la **modification** et la **suppression de produits**.
 
-To start a local development server, run:
+L'application utilise une **API REST** pour gérer les données et est conçue pour être **facile à utiliser même pour les non-développeurs**.
+
+## 🚀 Fonctionnalités Principales
+
+### ✅ Utilisateurs
+
+- **Inscription** avec nom, email, mot de passe, avatar et rôle (Admin ou Client).
+- **Connexion** sécurisée.
+- **Gestion des rôles** (Admin : gestion complète des produits, Client : achat seulement).
+
+### 🛍️ Produits
+
+- **Ajout de nouveaux produits** (Admin uniquement).
+- **Modification des produits** (Admin uniquement).
+- **Suppression des produits** (Admin uniquement).
+- **Affichage détaillé des produits**.
+- **Ajout au panier** (Client uniquement).
+- **Recherche dynamique**.
+- **Pagination des produits**.
+
+### ⚡ Notifications et Erreurs
+
+- **Gestion centralisée des erreurs** avec `MatSnackBar`.
+- **Affichage des erreurs API** en temps réel.
+- **Rechargement automatique après l'ajout/modification/suppression d'un produit**.
+
+---
+
+## 🛠️ Technologies Utilisées
+
+- **Angular** (Standalone Components)
+- **Angular Material** (UI)
+- **TypeScript**
+- **RxJS** (Gestion des Observables)
+- **API REST** (<https://api.escuelajs.co/api/v1/>)
+- **MatSnackBar** (Gestion des notifications)
+
+---
+
+## 📥 Installation et Configuration
+
+### 1️⃣ Prérequis
+
+- **Node.js** (v16+ recommandé)
+- **Angular CLI**
+- **Git**
+
+### 2️⃣ Cloner le projet
+
+```bash
+git clone https://github.com/hamidadj13/tp-project-weshare.git
+cd syncvote-angular
+```
+
+### 3️⃣ Installer les dépendances
+
+```bash
+npm install
+```
+
+### 4️⃣ Lancer l’application en mode développement
 
 ```bash
 ng serve
+
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+L’application sera accessible sur `http://localhost:4200` si le port n'est pas déja occupé
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 📝 Utilisation du Projet
 
-```bash
-ng generate component component-name
-```
+### 🔹 1. Inscription et Connexion
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1. Accédez à `/sign-up` pour créer un compte.
+2. Choisissez un **nom, email, mot de passe et avatar**.
+3. Le role est defini dans le code par défaut sur "customer"  donc qi vous créez un compte vous n'aurez pas accès à la plupart des fonctionnalités
+4. Pour changer cela, accédez au fichier sign-up.component.ts
+5. A la ligne 42 remplacez  `role: ['customer', Validators.required]` par `role: ['admin', Validators.required]`
+6. Aller sur le navigateur et remplir les champs et cliquer  sur **S'inscrire**.
+7. Une fois inscrit, connectez-vous via `/login`.
 
-```bash
-ng generate --help
-```
+### 🔹 2. Gestion des Produits (Admin uniquement)
 
-## Building
+- **Ajouter un produit** : Formulaire avec titre, prix, description, images, catégorie.
+- **Modifier un produit** : Bouton "Modifier" sur chaque produit.
+- **Supprimer un produit** : Bouton "🗑️ Supprimer".
+- **Voir un produit** : Détails avec accordéon d’images.
 
-To build the project run:
+### 🔹 3. Recherche et Pagination
 
-```bash
-ng build
-```
+- Barre de **recherche dynamique**.
+- **Pagination automatique** avec `MatPaginator`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🔧 Structure du Projet
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Voici la structure du projet
 
-```bash
-ng test
-```
+/src
+|
+|--- index.html
+|--- main.ts
+|--- README.txt
+|---  styles.css
+|
+\---app
+    |   app.component.css
+    |   app.component.html
+    |   app.component.spec.ts
+    |   app.component.ts
+    |   app.config.ts
+    |   app.routes.ts
+    |
+    +---add-product
+    |       add-product.component.css
+    |       add-product.component.html
+    |       add-product.component.spec.ts
+    |       add-product.component.ts
+    |
+    +---edit-product
+    |       edit-product.component.css
+    |       edit-product.component.html
+    |       edit-product.component.spec.ts
+    |       edit-product.component.ts
+    |
+    +---footer
+    |       footer.component.css
+    |       footer.component.html
+    |       footer.component.spec.ts
+    |       footer.component.ts
+    |
+    +---guards
+    |       auth.guard.spec.ts
+    |       auth.guard.ts
+    |
+    +---layout
+    |       layout.component.css
+    |       layout.component.html
+    |       layout.component.spec.ts
+    |       layout.component.ts
+    |
+    +---login
+    |       login.component.css
+    |       login.component.html
+    |       login.component.spec.ts
+    |       login.component.ts
+    |
+    +---product-detail
+    |       product-detail.component.css
+    |       product-detail.component.html
+    |       product-detail.component.spec.ts
+    |       product-detail.component.ts
+    |
+    +---products
+    |       products.component.css
+    |       products.component.html
+    |       products.component.spec.ts
+    |       products.component.ts
+    |
+    +---services
+    |       auth.service.spec.ts
+    |       auth.service.ts
+    |       categorie.service.spec.ts
+    |       categorie.service.ts
+    |       error.interceptor.service.spec.ts
+    |       error.interceptor.service.ts
+    |       notification.service.spec.ts
+    |       notification.service.ts
+    |       products.service.spec.ts
+    |       products.service.ts
+    |       users.service.spec.ts
+    |       users.service.ts
+    |
+    +---sign-up
+    |       sign-up.component.css
+    |       sign-up.component.html
+    |       sign-up.component.spec.ts
+    |       sign-up.component.ts
+    |
+    \---users
+            users.component.css
+            users.component.html
+            users.component.spec.ts
+            users.component.ts
+---
 
-## Running end-to-end tests
+## 🤝 Contribution
 
-For end-to-end (e2e) testing, run:
+Tu veux améliorer le projet ?
 
-```bash
-ng e2e
-```
+1. **Fork** le repo.
+2. Crée une **branche** (`git checkout -b feature-nouvelle-fonctionnalite`).
+3. **Fais tes modifications** et commit (`git commit -m "Ajout de X"`).
+4. **Push** (`git push origin feature-nouvelle-fonctionnalite`).
+5. Crée une **Pull Request**.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 📩 Support
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Si tu rencontres un problème, ouvre une **issue** sur GitHub ou contacte-moi directement.
+
+🚀 **Bon développement avec SyncVote !** 🎉
